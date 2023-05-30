@@ -69,7 +69,7 @@ def scrapper( tag, Page):
     st.download_button(
       label="Download data as CSV",
       data=convert_df_to_csv(df),
-      file_name='large_df.csv',
+      file_name='Final_Output.csv',
       mime='text/csv',
     )
     
