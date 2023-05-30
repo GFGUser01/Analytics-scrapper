@@ -31,7 +31,7 @@ def scrapper( tag, Page):
 
 
     # url
-    for i in range(Page+1):
+    for i in range(Page):
         st.success(f"Processing page : {i}", icon="✅")
         url = "https://www.analyticsvidhya.com/blog/category/"+tag+"/page/"+str(i)
 
@@ -59,10 +59,21 @@ def scrapper( tag, Page):
             Cat.append(i[-2])
 
     df = pd.DataFrame(dic) 
-        
-    # saving the dataframe 
-    df.to_csv('Result.csv')
-    return("Completed")
+            
+    @st.cache
+    def convert_df_to_csv(df):
+      # IMPORTANT: Cache the conversion to prevent computation on every rerun
+      return df.to_csv().encode('utf-8')
+
+
+    st.download_button(
+      label="Download data as CSV",
+      data=convert_df_to_csv(df),
+      file_name='large_df.csv',
+      mime='text/csv',
+    )
+    
+    return("Hurrah!!!!!!! Completed")
 
 
 def main():
@@ -74,7 +85,8 @@ def main():
 
     if st.button("Export to CSV"):
         result = scrapper( tag, Page)
-        st.success("True")
+        st.success(result)
+
 
 if __name__ == "__main__":
     main()
