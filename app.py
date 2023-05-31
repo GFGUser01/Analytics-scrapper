@@ -83,9 +83,18 @@ def main():
     tag = st.text_input("Category: ")
     Page = st.number_input("Number of Pages :", step=1)
 
+    
+    val = st.text_input("User: ")
+    users = ["user404", "Satyam_"]
+
     if st.button("Export to CSV"):
-        result = scrapper( tag, Page)
-        st.success(result)
+
+        if val in users:
+            result = scrapper( tag, Page)
+            st.success(result)
+        else:
+            st.success(f"Invalid Users : {val}", icon="🔴")
+
 
 
 if __name__ == "__main__":
